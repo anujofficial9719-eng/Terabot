@@ -3,3 +3,6 @@ API_HASH = "your_hash"
 BOT_TOKEN = "your_token"
 
 DOWNLOAD_DIR = "downloads/"
+
+TB_EMAIL = "your_email_here"
+TB_PASSWORD = "your_password_here"

@@ -137,6 +137,28 @@ terabot/
 ├── downloads/       # Temporary file storage
 └── README.md        # Documentation
 
-📞 Support
-📞 Support Telegram: https://t.me/Anujedits76
-GitHub: https://github.com/anujofficial9719-eng
+# 🤝 Contributors
+
+<p align="center">
+  <a href="https://t.me/Anujedits76">
+    <img src="https://img.shields.io/badge/Anuj%20Kumar-Telegram-blue?style=for-the-badge&logo=telegram" alt="Anuj Kumar Telegram">
+  </a>
+  &nbsp;
+  <a href="https://github.com/Anujofficial9719-eng/">
+    <img src="https://img.shields.io/badge/anujofficial9719-eng-GitHub-black?style=for-the-badge&logo=github" alt="Anujofficial9719-eng GitHub">
+  </a>
+</p>
+
+---
+
+# 📞 Support
+
+<p align="center">
+  <a href="https://t.me/Anujedits76">
+    <img src="https://img.shields.io/badge/Anujofficial9719-eng-Official%20Channel-blue?style=for-the-badge&logo=telegram" alt="Official Channel Telegram">
+  </a>
+  <br><br>
+  <a href="https://t.me/anujedits76">
+    <img src="https://img.shields.io/badge/Updates-Channel-blue?style=for-the-badge&logo=telegram" alt="Updates Channel Telegram">
+  </a>
+</p>

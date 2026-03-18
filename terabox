@@ -1,10 +1,21 @@
 terabot/
-├── bot.py
-├── api.py
-├── extractor.py   # 🔥 NEW (smart link handler)
-├── downloader.py
-├── config.py
-├── cookies.txt
-├── requirements.txt
-├── start.sh
-└── downloads/
+│
+├── bot.py                # 🤖 Telegram bot handler
+├── api.py                # 🌐 Flask API server
+├── extractor.py          # 🔗 TeraBox link extractor (core logic)
+├── downloader.py         # ⚡ aria2 download engine
+├── login.py              # 🔐 Auto login / cookie generator
+├── config.py             # ⚙️ Configuration (API keys, creds)
+│
+├── requirements.txt      # 📦 Dependencies
+├── start.sh              # 🚀 Startup script
+├── README.md             # 📘 Documentation
+│
+├── cookies.txt           # 🍪 TeraBox cookie (auto/manual)
+├── downloads/            # 📂 Downloaded files (auto created)
+│
+├── logs/                 # 📊 Logs folder (NEW 🔥)
+│   ├── bot.log
+│   └── api.log
+│
+└── .env                  # 🔐 Secure env variables (optional BEST)

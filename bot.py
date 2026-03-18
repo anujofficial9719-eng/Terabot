@@ -7,6 +7,8 @@ from downloader import download
 
 app = Client("bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
+MAX_SIZE = 2 * 1024 * 1024 * 1024  # 2GB limit
+
 @app.on_message(filters.text)
 async def main(client, message):
     url = message.text.strip()
@@ -39,6 +41,17 @@ async def main(client, message):
             await msg.edit(f"⬇️ [{i}/{len(files)}] Downloading:\n{name}")
 
             path = download(link)
+
+            # ❌ download failed check
+            if not path or not os.path.exists(path):
+                await message.reply(f"❌ Download failed: {name}")
+                continue
+
+            # ⚠️ file size check (2GB limit)
+            if os.path.getsize(path) > MAX_SIZE:
+                await message.reply(f"⚠️ File too large (2GB+): {name}")
+                os.remove(path)
+                continue
 
             await msg.edit(f"⬆️ [{i}/{len(files)}] Uploading:\n{name}")
 

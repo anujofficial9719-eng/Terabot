@@ -1,0 +1,10 @@
+terabox-bot/
+│
+├── bot.py
+├── config.py
+├── requirements.txt
+├── downloader.py
+├── api.py
+├── cookies.txt
+├── start.sh
+└── downloads/

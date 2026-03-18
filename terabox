@@ -1,10 +1,10 @@
 terabot/
-│
 ├── bot.py
-├── config.py
-├── requirements.txt
-├── downloader.py
 ├── api.py
+├── extractor.py   # 🔥 NEW (smart link handler)
+├── downloader.py
+├── config.py
 ├── cookies.txt
+├── requirements.txt
 ├── start.sh
 └── downloads/

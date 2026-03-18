@@ -1,4 +1,4 @@
-terabox-bot/
+terabot/
 │
 ├── bot.py
 ├── config.py

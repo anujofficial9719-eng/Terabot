@@ -138,5 +138,5 @@ terabot/
 └── README.md        # Documentation
 
 📞 Support
-text = "[Support Telegram](https://t.me/Anujedits76) | [GitHub](https://github.com/anujofficial9719-eng)"
-bot.send_message(chat_id, text, parse_mode="Markdown")
+📞 Support Telegram: https://t.me/Anujedits76
+GitHub: https://github.com/anujofficial9719-eng

@@ -1,30 +1,17 @@
-import requests
-from config import TB_EMAIL, TB_PASSWORD
+import os
 
-def login_and_get_cookie():
-    session = requests.Session()
+def login_and_get_cookie(email=None, password=None):
+    """
+    ⚠️ Direct login unreliable hai
+    Isliye manual cookie system use karo
+    """
 
-    url = "https://passport.terabox.com/v2/api/?login"
-
-    data = {
-        "username": TB_EMAIL,
-        "password": TB_PASSWORD
-    }
-
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
-
-    res = session.post(url, data=data, headers=headers)
-
-    cookies = session.cookies.get_dict()
-
-    if "ndus" in cookies:
-        with open("cookies.txt", "w") as f:
-            f.write(f"ndus={cookies['ndus']};")
-
-        print("✅ Cookie generated")
+    if os.path.exists("cookies.txt"):
+        print("✅ Using existing cookie")
         return True
 
-    print("❌ Login failed")
+    print("❌ No cookie found!")
+    print("👉 Manually add cookie in cookies.txt like:")
+    print("ndus=YOUR_COOKIE_HERE;")
+
     return False

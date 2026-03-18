@@ -2,5 +2,4 @@ API_ID = 123456
 API_HASH = "your_hash"
 BOT_TOKEN = "your_token"
 
-API_URL = "http://127.0.0.1:5000/api?url="
 DOWNLOAD_DIR = "downloads/"

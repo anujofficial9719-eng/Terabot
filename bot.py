@@ -11,14 +11,15 @@ app = Client("bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 MAX_SIZE = 2 * 1024 * 1024 * 1024  # 2GB limit
 
 # =========================
-# 🗂 Plans Menu
+# 🗂 Plans Menu (Category)
 # =========================
 @app.on_message(filters.command("plans"))
-async def plans(client, message):
+async def plans_category(client, message):
     keyboard = InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("🔹 Regular Plan", callback_data="plan_regular")],
-            [InlineKeyboardButton("⚡ Creator Plan", callback_data="plan_creator")]
+            [InlineKeyboardButton("⚡ Creator Plan", callback_data="plan_creator")],
+            [InlineKeyboardButton("📜 Regular Plan Details", callback_data="plan_details")]
         ]
     )
     await message.reply(
@@ -40,6 +41,8 @@ async def plans(client, message):
 @app.on_callback_query()
 async def plan_callback(client, callback_query):
     data = callback_query.data
+
+    # ===== Category Plans =====
     if data == "plan_regular":
         await callback_query.message.edit_text(
             "🔹 You selected **Regular Plan**\n\n"
@@ -54,12 +57,43 @@ async def plan_callback(client, callback_query):
             "• Auto-Forward Downloads to your Channel\n\n"
             "All Regular Plan features included!"
         )
+    # ===== Detailed Regular Plans =====
+    elif data == "plan_details":
+        keyboard = InlineKeyboardMarkup(
+            [
+                [InlineKeyboardButton("🎟️ Bronze — 12 Days ₹19", callback_data="plan_bronze")],
+                [InlineKeyboardButton("🥈 Silver — 30 Days ₹39", callback_data="plan_silver")],
+                [InlineKeyboardButton("🥇 Silver Plus — 45 Days ₹59", callback_data="plan_silverplus")],
+                [InlineKeyboardButton("🏅 Gold — 60 Days ₹79", callback_data="plan_gold")],
+                [InlineKeyboardButton("👑 Platinum — 90 Days ₹99", callback_data="plan_platinum")],
+                [InlineKeyboardButton("💎 Diamond — 150 Days ₹149", callback_data="plan_diamond")],
+                [InlineKeyboardButton("🚀 Ultimate — 200 Days ₹199", callback_data="plan_ultimate")]
+            ]
+        )
+        await callback_query.message.edit_text(
+            "📜 **Available Plans for Terabox — Regular**\n\n"
+            "Choose your preferred plan below to see details:",
+            reply_markup=keyboard
+        )
+    else:
+        # Individual plan details
+        plan_details = {
+            "plan_bronze": "🎟️ **Bronze — 12 Days**\n💰 ₹19 (₹1.58/day)\n✅ Multiple Links Downloading\n✅ Bulk Link Processing\n✅ Folder Link Support\n✅ No Waiting Queue\n✅ Unlimited Downloads\n✅ All Features Unlocked",
+            "plan_silver": "🥈 **Silver — 30 Days**\n💰 ₹39 (₹1.30/day)\n✅ Multiple Links Downloading\n✅ Bulk Link Processing\n✅ Folder Link Support\n✅ No Waiting Queue\n✅ Unlimited Downloads\n✅ All Features Unlocked",
+            "plan_silverplus": "🥇 **Silver Plus — 45 Days**\n💰 ₹59 (₹1.31/day)\n✅ Multiple Links Downloading\n✅ Bulk Link Processing\n✅ Folder Link Support\n✅ No Waiting Queue\n✅ Unlimited Downloads\n✅ All Features Unlocked",
+            "plan_gold": "🏅 **Gold — 60 Days**\n💰 ₹79 (₹1.32/day)\n✅ Multiple Links Downloading\n✅ Bulk Link Processing\n✅ Folder Link Support\n✅ No Waiting Queue\n✅ Unlimited Downloads\n✅ All Features Unlocked",
+            "plan_platinum": "👑 **Platinum — 90 Days**\n💰 ₹99 (₹1.10/day)\n✅ Multiple Links Downloading\n✅ Bulk Link Processing\n✅ Folder Link Support\n✅ No Waiting Queue\n✅ Unlimited Downloads\n✅ All Features Unlocked",
+            "plan_diamond": "💎 **Diamond — 150 Days**\n💰 ₹149 (₹0.99/day)\n✅ Multiple Links Downloading\n✅ Bulk Link Processing\n✅ Folder Link Support\n✅ No Waiting Queue\n✅ Unlimited Downloads\n✅ All Features Unlocked",
+            "plan_ultimate": "🚀 **Ultimate — 200 Days**\n💰 ₹199 (₹0.995/day)\n✅ Multiple Links Downloading\n✅ Bulk Link Processing\n✅ Folder Link Support\n✅ No Waiting Queue\n✅ Unlimited Downloads\n✅ All Features Unlocked"
+        }
+        if data in plan_details:
+            await callback_query.message.edit_text(plan_details[data], disable_web_page_preview=True)
 
 # =========================
 # 📂 Main Download Handler
 # =========================
 @app.on_message(filters.text)
-async def main(client, message):
+async def main_handler(client, message):
     url = message.text.strip()
 
     msg = await message.reply("🔍 Processing link...")

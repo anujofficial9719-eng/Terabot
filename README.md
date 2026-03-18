@@ -138,5 +138,5 @@ terabot/
 └── README.md        # Documentation
 
 📞 Support
-Telegram: t.me/Anujedits76
-GitHub: 
+Telegram: https//t.me/Anujedits76
+GitHub: https://github.com/anujofficial9719-eng

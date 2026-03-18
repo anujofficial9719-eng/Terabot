@@ -7,6 +7,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from config import *
 from downloader import download
+from config import ADMINS
 
 # =========================
 # 🚀 Pyrogram Bot Initialization

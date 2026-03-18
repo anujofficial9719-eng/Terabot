@@ -4,3 +4,4 @@ requests
 flask
 aria2p
 aiohttp
+beautifulsoup4

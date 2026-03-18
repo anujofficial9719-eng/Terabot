@@ -13,35 +13,50 @@ async def main(client, message):
 
     msg = await message.reply("🔍 Processing link...")
 
-    res = requests.get(f"http://127.0.0.1:5000/api?url={url}").json()
+    try:
+        res = requests.get(
+            f"http://127.0.0.1:5000/api?url={url}",
+            timeout=30
+        ).json()
+    except:
+        return await msg.edit("❌ API Error / Server Down")
 
-    if res["status"] != "success":
-        return await msg.edit("❌ Invalid link")
+    if res.get("status") != "success":
+        return await msg.edit("❌ Invalid or unsupported link")
 
-    files = res["files"]
+    files = res.get("files", [])
 
-    await msg.edit(f"📂 Found {len(files)} files")
+    if not files:
+        return await msg.edit("❌ No files found")
 
-    for f in files:
-        name = f["name"]
-        link = f["link"]
+    await msg.edit(f"📂 Found {len(files)} file(s)")
 
-        await msg.edit(f"⬇️ Downloading: {name}")
+    for i, f in enumerate(files, start=1):
+        name = f.get("name")
+        link = f.get("link")
 
-        path = download(link)
+        try:
+            await msg.edit(f"⬇️ [{i}/{len(files)}] Downloading:\n{name}")
 
-        await msg.edit(f"⬆️ Uploading: {name}")
+            path = download(link)
 
-        sent = await client.send_document(
-            message.chat.id,
-            document=path,
-            caption=f"📄 {name}"
-        )
+            await msg.edit(f"⬆️ [{i}/{len(files)}] Uploading:\n{name}")
 
-        os.remove(path)
+            await client.send_document(
+                message.chat.id,
+                document=path,
+                caption=f"📄 {name}"
+            )
 
-        await asyncio.sleep(2)
+            os.remove(path)
 
+        except Exception as e:
+            await message.reply(f"❌ Failed: {name}")
+
+        await asyncio.sleep(1)
+
+    await msg.edit("✅ All files uploaded successfully!")
+    await asyncio.sleep(3)
     await msg.delete()
 
 app.run()

@@ -1,111 +1,288 @@
-# 🚀 Terabox Downloader Bot
+# 🚀 Save Restricted Content Bot (Advanced)
 
-[![Python Version](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10+-blue?logo=python&style=for-the-badge">
+  <img src="https://img.shields.io/badge/Library-Pyrogram-yellow?logo=telegram&style=for-the-badge">
+  <img src="https://img.shields.io/badge/Database-MongoDB-green?logo=mongodb&style=for-the-badge">
+  <img src="https://img.shields.io/badge/Status-Stable-success?style=for-the-badge">
+</p>
 
-**Terabox Downloader Bot** is a fully automated Telegram bot for downloading Terabox files and folders directly to Telegram. Supports bulk downloads, folder links, auto login, and premium plan management.
+<p align="center">
+<b>A cleaner and improved version of the Save Restricted Content Bot with a better structure, smoother workflow, and practical features for real usage.</b>
+</p>
 
----
-
-## 🗂 Features
-
-### Core
-- 🔐 Auto login & cookie management (`ndus` cookie handled automatically)
-- ⚡ Fast downloads using `aria2` with multiple connections
-- 📂 Folder & multiple file link support
-- ⏱ No waiting queue
-- 🌐 Bulk link processing
-- 🆓 Unlimited downloads
-- 📤 Auto upload to Telegram
-- 💾 Temporary storage in `/downloads`  
-- 🧹 Automatic cleanup after upload
-- ⚠️ Maximum 2GB per file (configurable in `bot.py`)
-
-### Plans System
-- **Categories:** Regular, Creator  
-- **Regular Plans:**
-  - 🎟 Bronze — 12 Days ₹19
-  - 🥈 Silver — 30 Days ₹39
-  - 🥇 Silver Plus — 45 Days ₹59
-  - 🏅 Gold — 60 Days ₹79
-  - 👑 Platinum — 90 Days ₹99
-  - 💎 Diamond — 150 Days ₹149
-  - 🚀 Ultimate — 200 Days ₹199
-
-- **Creator Plans (Extra Features):**
-  - Access to `/settings`  
-  - Custom dump channel  
-  - Auto-forward downloads to your channel  
-  - Includes all Regular Plan features  
-- Plans range from Creator Bronze ₹39 to Creator Ultimate ₹499
+<p align="center">
+  <a href="https://github.com/anujofficial9719-eng/SAVE-RESTRICT-BOT">
+    <img src="https://img.shields.io/badge/View-Original%20Repository-black?style=for-the-badge&logo=github">
+  </a>
+</p>
 
 ---
 
-## 🛠 Requirements
+## 🔗 Quick Links
 
-- Python 3.11+
-- Install dependencies:
+<p align="center">
+  <a href="#-features"><img src="https://img.shields.io/badge/Features-View-blue?style=for-the-badge"></a>
+  <a href="#-deployment"><img src="https://img.shields.io/badge/Deployment-Setup-green?style=for-the-badge"></a>
+  <a href="#-commands"><img src="https://img.shields.io/badge/Commands-List-orange?style=for-the-badge"></a>
+  <a href="#-support"><img src="https://img.shields.io/badge/Support-Telegram-blue?style=for-the-badge&logo=telegram"></a>
+</p>
+
+---
+
+# 🚀 Features
+
+<details open>
+<summary><b>📦 Core Features</b></summary>
+
+- **Save Restricted Content** — Download text, media, and files from restricted channels.
+- **Batch Mode** — Bulk download messages from public or private channels with auto-detection.
+- **User Login** — Login using `/login` to enable downloading capabilities.
+
+### ⚙️ Customization
+
+- Set custom captions (`/set_caption`)
+- Set custom thumbnails (`/set_thumb`)
+- Auto-delete or replace specific words
+
+### 💎 Premium System
+
+- Built-in system for free and premium users
+- Admin-controlled premium access
+
+### 👑 Admin Tools
+
+- Broadcast messages
+- Ban / Unban users
+- Manage premium status
+
+### 🧠 Persistent Storage
+
+- MongoDB-based user data and settings
+
+### ☁️ Keep Alive
+
+- Supports uptime services for Render / Heroku deployments
+
+</details>
+
+---
+
+# 🛠 Deployment
+
+## ✅ Prerequisites
+
+- Python **3.10+**
+- MongoDB Database
+- Telegram API ID & Hash
+- Bot Token
+
+---
+
+## ⚙️ Environment Variables
+
+<details>
+<summary><b>Click to Expand</b></summary>
+
+| Variable        | Description                                |
+| --------------- | ------------------------------------------ |
+| `BOT_TOKEN`     | Telegram Bot Token from BotFather          |
+| `API_ID`        | Telegram API ID                            |
+| `API_HASH`      | Telegram API Hash                          |
+| `ADMINS`        | Comma-separated Admin User IDs             |
+| `DB_URI`        | MongoDB Connection String                  |
+| `DB_NAME`       | Database Name (default: `SaveRestricted2`) |
+| `LOG_CHANNEL`   | Channel ID for logging users and errors    |
+| `ERROR_MESSAGE` | Send error messages to users               |
+| `KEEP_ALIVE`    | Use an uptime service like UptimeRobot     |
+
+</details>
+
+---
+
+## 💻 Local Setup
+
+<details open>
+<summary><b>Installation Steps</b></summary>
+
+### Clone the repository
+
+```bash
+git clone 
+https://github.com/anujofficial9719-eng/SAVE-RESTRICT-BOT
+cd SAVE-RESTRICT-BOT
+```
+
+### Install dependencies
+
 ```bash
 pip install -r requirements.txt
+```
 
-pyrogram==2.0.106
-tgcrypto==1.2.5
-requests==2.31.0
-flask==2.3.3
-aria2p==0.11.3
-aiohttp==3.9.5
-beautifulsoup4==4.12.3
-selenium==4.11.2
-webdriver-manager==4.10.1
+### Run the bot
 
-⚙ Setup
+```bash
+python bot.py
+```
 
-git clone https://github.com/anujofficial9719-eng/Terabot.git
-cd Terabot
+</details>
 
-comfig.py
+---
 
-API_ID = 123456
-API_HASH = "your_api_hash"
-BOT_TOKEN = "your_bot_token"
-TB_EMAIL = "your_email"
-TB_PASSWORD = "your_password"
-DOWNLOAD_DIR = "downloads/"
+## 🐳 Docker
+
+```bash
+docker build -t save-restricted-bot .
+docker run -d --env-file .env save-restricted-bot
+```
+
+---
+
+# 📝 Commands
+
+## 👤 User Commands
+
+<details>
+<summary><b>Click to Expand</b></summary>
+
+| Command     | Action                   |
+| ----------- | ------------------------ |
+| `/start`    | Start the bot            |
+| `/help`     | Get help information     |
+| `/login`    | Login to your account    |
+| `/logout`   | Logout from your account |
+| `/cancel`   | Cancel batch process     |
+| `/settings` | Open settings menu       |
+| `/myplan`   | Check your current plan  |
+| `/premium`  | View premium details     |
+
+### ⚙️ Customization
+
+- `/set_caption`
+- `/see_caption`
+- `/del_caption`
+- `/set_thumb`
+- `/view_thumb`
+- `/del_thumb`
+- `/thumb_mode`
+- `/set_del_word`
+- `/rem_del_word`
+- `/set_repl_word`
+- `/rem_repl_word`
+- `/setchat`
+- `/setchat`
+  `/setchat`
+- `/add_premium`
+
+</details>
+
+---
+
+## 👑 Admin Commands
+
+<details>
+<summary><b>Click to Expand</b></summary>
+
+- `/broadcast`
+- `/ban` / `/unban`
+- `/add_premium` / `/remove_premium`
+- `/users`
+- `/premium_users`
+- `/set_dump`
+- `/dblink`
+
+</details>
+
+---
+
+# 🤝 Contributors
+
+<p align="center">
+  <a href="https://t.me/Anujedits76">
+    <img src="https://img.shields.io/badge/Anuj%20Kumar-Telegram-blue?style=for-the-badge&logo=telegram" alt="Anuj Kumar Telegram">
+  </a>
+  &nbsp;
+  <a href="https://github.com/Anujofficial9719-eng/">
+    <img src="https://img.shields.io/badge/anujofficial9719-eng-GitHub-black?style=for-the-badge&logo=github" alt="Anujofficial9719-eng GitHub">
+  </a>
+</p>
+
+---
+
+# 📞 Support
+
+<p align="center">
+  <a href="https://t.me/Anujedits76">
+    <img src="https://img.shields.io/badge/Anujofficial9719-eng-Official%20Channel-blue?style=for-the-badge&logo=telegram" alt="Official Channel Telegram">
+  </a>
+  <br><br>
+  <a href="https://t.me/anujedits76">
+    <img src="https://img.shields.io/badge/Updates-Channel-blue?style=for-the-badge&logo=telegram" alt="Updates Channel Telegram">
+  </a>
+</p>
+
+🐳 Docker Deployment
+docker build -t terabox-downloader .
+docker run -d --env-file .env terabox-downloader
+
+📝 Commands
+👤 User Commands
+�
+Click to Expand
+Command
+Description
+/start
+Start the bot
+/help
+Show help info
+/plans
+View all plans and categories
+/myplan
+Check current plan
+/settings
+Access bot settings (if Creator plan)
+/download
+Download a Terabox file/folder link
+�
+
+👑 Admin Commands
+�
+Click to Expand
+/broadcast — Send messages to all users
+/ban / /unban — Manage users
+/add_premium / /remove_premium — Manage premium access
+/logs — View bot logs
 
 📁 Folder Structure
-
 terabot/
 │
 ├── bot.py           # Telegram bot logic
-├── api.py           # Flask API
-├── extractor.py     # Terabox link resolver
 ├── downloader.py    # Aria2 download engine
 ├── login.py         # Auto login & cookie
-├── config.py        # Configuration
+├── config.py        # Configuration variables
 ├── requirements.txt # Dependencies
 ├── start.sh         # Startup script
 ├── README.md        # Documentation
-├── cookies.txt      # Auto-generated cookie
-├── downloads/       # Temporary storage
-├── logs/            # Logs (bot.log, api.log)
+├── downloads/       # Temporary file storage
+├── logs/            # Logs
 └── .env             # Optional environment variables
 
-💡 Usage
+💡 How to Use
 Add the bot to Telegram
-Send Terabox file/folder link
+Send Terabox link
 Bot automatically:
 Logs in (if needed)
 Resolves link
 Downloads via Aria2
 Uploads files to Telegram
-Use /plans to view plan categories and individual plan details.
+Use /plans to see available plans
 🔒 Security
 Auto cookie management (manual edits not required)
 Recommended: store credentials in .env
 Max file size: 2GB per upload (adjustable)
 📜 License
 MIT License — Free for personal use. Commercial use requires permission.
-💬 Support
-For issues, feedback, or collaboration, contact:
+💬 Owner & Support
+Owner: Anuj Kumar
 Telegram: @anujedits76⁠�
+GitHub: anujofficial9719-eng⁠�

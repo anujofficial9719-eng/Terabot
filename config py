@@ -5,6 +5,9 @@ API_ID = int(os.getenv("API_ID", "123456"))
 API_HASH = os.getenv("API_HASH", "your_hash")
 BOT_TOKEN = os.getenv("BOT_TOKEN", "your_token")
 
+# config.py
+ADMINS = ["anujedits76", "another_admin"]  # Telegram usernames of admins
+
 # 📂 Download folder
 DOWNLOAD_DIR = os.getenv("DOWNLOAD_DIR", "downloads/")
 

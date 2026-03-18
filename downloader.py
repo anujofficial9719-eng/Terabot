@@ -14,7 +14,7 @@ def download(url):
     os.makedirs("downloads", exist_ok=True)
 
     try:
-        download = aria2.add_uris(
+        d = aria2.add_uris(
             [url],
             options={
                 "dir": "downloads",
@@ -26,4 +26,18 @@ def download(url):
             }
         )
 
-        while not download.is
+        while not d.is_complete:
+            d.update()
+            print(f"⬇️ {d.progress_string()} | 🚀 {d.download_speed_string()}")
+            time.sleep(1)
+
+        # ❌ failed download check
+        if d.has_failed:
+            print("❌ Download failed")
+            return None
+
+        return d.files[0].path
+
+    except Exception as e:
+        print(f"❌ Download Error: {e}")
+        return None

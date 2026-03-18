@@ -1,6 +1,8 @@
 import asyncio
 import requests
 import os
+import json
+from datetime import datetime, timedelta
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from config import *
@@ -11,6 +13,23 @@ from downloader import download
 # =========================
 app = Client("bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 MAX_SIZE = 2 * 1024 * 1024 * 1024  # 2GB limit
+
+# =========================
+# 👑 Admins & Premium Storage
+# =========================
+ADMINS = ["anujedits76"]  # Admin username(s)
+PREMIUM_FILE = "premium_users.json"
+
+# Load premium users from file
+if os.path.exists(PREMIUM_FILE):
+    with open(PREMIUM_FILE, "r") as f:
+        premium_users = {int(k): datetime.fromisoformat(v) for k, v in json.load(f).items()}
+else:
+    premium_users = {}
+
+def save_premium():
+    with open(PREMIUM_FILE, "w") as f:
+        json.dump({k: v.isoformat() for k, v in premium_users.items()}, f)
 
 # =========================
 # 🗂 Plans Menu (Category)
@@ -171,6 +190,53 @@ async def main_handler(client, message):
     await msg.edit("✅ All files uploaded successfully!")
     await asyncio.sleep(3)
     await msg.delete()
+
+# =========================
+# 👑 Admin Commands
+# =========================
+@app.on_message(filters.command("add_premium") & filters.user(lambda u: u.username in ADMINS))
+async def add_premium(client, message):
+    try:
+        args = message.text.split()
+        if len(args) != 3:
+            return await message.reply("Usage: /add_premium <user_id> <days>")
+
+        user_id = int(args[1])
+        days = int(args[2])
+        expiry = datetime.now() + timedelta(days=days)
+        premium_users[user_id] = expiry
+        save_premium()
+
+        await message.reply(f"✅ Premium access granted to `{user_id}` for {days} day(s).\nExpires on {expiry.strftime('%Y-%m-%d %H:%M:%S')}")
+    except Exception as e:
+        await message.reply(f"❌ Error: {e}")
+
+@app.on_message(filters.command("remove_premium") & filters.user(lambda u: u.username in ADMINS))
+async def remove_premium(client, message):
+    try:
+        args = message.text.split()
+        if len(args) != 2:
+            return await message.reply("Usage: /remove_premium <user_id>")
+
+        user_id = int(args[1])
+        if user_id in premium_users:
+            del premium_users[user_id]
+            save_premium()
+            await message.reply(f"✅ Premium access removed for `{user_id}`")
+        else:
+            await message.reply(f"❌ User `{user_id}` does not have premium access")
+    except Exception as e:
+        await message.reply(f"❌ Error: {e}")
+
+@app.on_message(filters.command("premium_users") & filters.user(lambda u: u.username in ADMINS))
+async def list_premium_users(client, message):
+    if not premium_users:
+        return await message.reply("❌ No premium users found")
+
+    msg = "📜 **Premium Users:**\n"
+    for uid, expiry in premium_users.items():
+        msg += f"- `{uid}` expires on {expiry.strftime('%Y-%m-%d %H:%M:%S')}\n"
+    await message.reply(msg)
 
 # =========================
 # 🚀 Run Bot

@@ -1,9 +1,9 @@
 import os
 
 # 🔐 Telegram Config
-API_ID = int(os.getenv("API_ID", "123456"))
-API_HASH = os.getenv("API_HASH", "your_hash")
-BOT_TOKEN = os.getenv("BOT_TOKEN", "your_token")
+API_ID = int(os.getenv("API_ID", "34724970"))
+API_HASH = os.getenv("API_HASH", "f240eae7c60e8e30c17203ab0e052f7e)
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8726665578:AAHLSN3AxqWoRzeSJU2oV4Bm4QPfKKSkPKo")
 
 # config.py
 ADMINS = ["anujedits76", "another_admin"]  # Telegram usernames of admins
@@ -12,5 +12,5 @@ ADMINS = ["anujedits76", "another_admin"]  # Telegram usernames of admins
 DOWNLOAD_DIR = os.getenv("DOWNLOAD_DIR", "downloads/")
 
 # 🔐 TeraBox Login
-TB_EMAIL = os.getenv("TB_EMAIL", "your_email_here")
-TB_PASSWORD = os.getenv("TB_PASSWORD", "your_password_here")
+TB_EMAIL = os.getenv("TB_EMAIL", "anuj85971@gmail.com")
+TB_PASSWORD = os.getenv("TB_PASSWORD", "anuj85971anuj")

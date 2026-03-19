@@ -1,43 +1,53 @@
-import aria2p
+import requests
 import os
-import time
+from urllib.parse import urlparse
+import re
 
-aria2 = aria2p.API(
-    aria2p.Client(
-        host="http://localhost",
-        port=6800,
-        secret=""  # agar RPC secret use kar rahe ho to yaha daalo
-    )
-)
+DOWNLOAD_FOLDER = "downloads"
+os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
 
-def download(url):
-    os.makedirs("downloads", exist_ok=True)
+def download(url: str) -> str:
+    """
+    Downloads file from TeraBox or Terashare link.
+    Returns local file path, empty string if failed.
+    """
+    filename = os.path.basename(urlparse(url).path)
+    if not filename:
+        filename = "file_" + str(abs(hash(url)))
+    path = os.path.join(DOWNLOAD_FOLDER, filename)
 
+    # ===== Terashare link handling =====
+    if "terasharelink.com" in url:
+        try:
+            r = requests.get(url, timeout=30)
+            r.raise_for_status()
+            
+            # Parse direct download URL (Terashare pages usually contain 'download' href)
+            m = re.search(r'href="(https://.*?/download.*?)"', r.text)
+            if not m:
+                raise Exception("Direct download URL not found")
+            direct_url = m.group(1)
+
+            with requests.get(direct_url, stream=True, timeout=60) as resp:
+                resp.raise_for_status()
+                with open(path, "wb") as f:
+                    for chunk in resp.iter_content(chunk_size=1024*1024):
+                        if chunk:
+                            f.write(chunk)
+            return path
+        except Exception as e:
+            print(f"Terashare download error: {e}")
+            return ""
+
+    # ===== TeraBox / direct links =====
     try:
-        d = aria2.add_uris(
-            [url],
-            options={
-                "dir": "downloads",
-                "split": "16",
-                "max-connection-per-server": "16",
-                "min-split-size": "1M",
-                "file-allocation": "none",
-                "summary-interval": "1"
-            }
-        )
-
-        while not d.is_complete:
-            d.update()
-            print(f"⬇️ {d.progress_string()} | 🚀 {d.download_speed_string()}")
-            time.sleep(1)
-
-        # ❌ failed download check
-        if d.has_failed:
-            print("❌ Download failed")
-            return None
-
-        return d.files[0].path
-
+        with requests.get(url, stream=True, timeout=60) as r:
+            r.raise_for_status()
+            with open(path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=1024*1024):
+                    if chunk:
+                        f.write(chunk)
+        return path
     except Exception as e:
-        print(f"❌ Download Error: {e}")
-        return None
+        print(f"TeraBox download error: {e}")
+        return ""
